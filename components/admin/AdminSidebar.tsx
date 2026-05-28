@@ -235,7 +235,7 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
   const sidebarContent = (
     <>
       {/* Logo */}
-      <div style={{ padding: "20px 20px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+      <div style={{ padding: "20px 20px 16px", borderBottom: "1px solid var(--adm-border)", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{ fontSize: "1.25rem", fontWeight: 900, color: "#E8312A", letterSpacing: "-0.04em" }}>
             BrandThink
@@ -275,7 +275,7 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
             <div key={section.title} style={{ marginBottom: 4 }}>
               <div style={{
                 fontSize: "0.5625rem", fontWeight: 700,
-                color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em",
+                color: "var(--adm-muted)", letterSpacing: "0.12em",
                 textTransform: "uppercase", padding: "10px 10px 4px",
               }}>
                 {section.title}
@@ -293,21 +293,21 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
                       textDecoration: "none",
                       fontSize: "0.875rem",
                       fontWeight: active ? 600 : 500,
-                      color: active ? "#E8312A" : "rgba(255,255,255,0.55)",
+                      color: active ? "#E8312A" : "var(--adm-muted2)",
                       background: active ? "rgba(232,49,42,0.10)" : "transparent",
                       borderLeft: active ? "3px solid #E8312A" : "3px solid transparent",
                       transition: "all 0.15s", marginBottom: 2,
                     }}
                     onMouseEnter={(e) => {
                       if (!active) {
-                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
-                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)";
+                        (e.currentTarget as HTMLElement).style.background = "var(--adm-card)";
+                        (e.currentTarget as HTMLElement).style.color = "var(--adm-text)";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!active) {
                         (e.currentTarget as HTMLElement).style.background = "transparent";
-                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.55)";
+                        (e.currentTarget as HTMLElement).style.color = "var(--adm-muted2)";
                       }
                     }}
                   >
@@ -322,16 +322,16 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
       </nav>
 
       {/* User footer */}
-      <div style={{ padding: "14px 16px", borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+      <div style={{ padding: "14px 16px", borderTop: "1px solid var(--adm-border)", flexShrink: 0 }}>
         {user ? (
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <img src={user.avatar} alt={user.name}
               style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#F5F5F5", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--adm-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {user.name}
               </div>
-              <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,0.4)", textTransform: "capitalize" }}>
+              <div style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", textTransform: "capitalize" }}>
                 {user.role.replace("_", " ")}
               </div>
             </div>
@@ -376,8 +376,8 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
         style={{
           width: 240,
           flexShrink: 0,
-          background: "#0d0d0d",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
+          background: "var(--adm-surface)",
+          borderRight: "1px solid var(--adm-border)",
           display: "flex",
           flexDirection: "column",
           height: "100vh",
@@ -385,7 +385,7 @@ export default function AdminSidebar({ user, open, onClose }: AdminSidebarProps)
           top: 0,
           overflowY: "auto",
           zIndex: 999,
-          transition: "transform 0.3s ease",
+          transition: "transform 0.3s ease, background 0.25s, border-color 0.25s",
         }}
       >
         {sidebarContent}

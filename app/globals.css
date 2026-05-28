@@ -2,6 +2,17 @@
 
 /* ─── BrandThink Design Tokens ─────────────────────────────────────── */
 :root {
+  /* Admin panel tokens — dark defaults */
+  --adm-bg:       #0a0a0a;
+  --adm-surface:  #0d0d0d;
+  --adm-card:     #141414;
+  --adm-card2:    #1a1a1a;
+  --adm-border:   rgba(255,255,255,0.06);
+  --adm-border2:  rgba(255,255,255,0.10);
+  --adm-text:     #F5F5F5;
+  --adm-muted:    rgba(255,255,255,0.4);
+  --adm-muted2:   rgba(255,255,255,0.6);
+  --adm-input:    #1e1e1e;
   --bt-black:   #111111;
   --bt-surface: #191919;
   --bt-card:    #222222;
@@ -31,6 +42,20 @@
   --bt-muted:   #666666;
   --bt-dim:     #999999;
 }
+/* Admin panel — light mode overrides */
+[data-theme="light"] {
+  --adm-bg:       #f0f2f5;
+  --adm-surface:  #ffffff;
+  --adm-card:     #f8f9fa;
+  --adm-card2:    #eef0f3;
+  --adm-border:   rgba(0,0,0,0.08);
+  --adm-border2:  rgba(0,0,0,0.14);
+  --adm-text:     #111111;
+  --adm-muted:    rgba(0,0,0,0.45);
+  --adm-muted2:   rgba(0,0,0,0.65);
+  --adm-input:    #ffffff;
+}
+
 [data-theme="light"] body  { background: #FAFAFA; color: #111111; }
 [data-theme="light"] .nav.scrolled {
   background: rgba(250,250,250,0.92);
