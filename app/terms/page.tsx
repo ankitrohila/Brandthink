@@ -1,10 +1,6 @@
+"use client";
 import Footer from "@/components/sections/Footer";
 
-export const metadata = {
-  title: "Terms of Service | BrandThink",
-  description:
-    "Read BrandThink's Terms of Service. These terms govern your use of our 360° marketing and advertising services.",
-};
 
 /* ─── Static content ──────────────────────────────────────────────────── */
 const SECTIONS = [

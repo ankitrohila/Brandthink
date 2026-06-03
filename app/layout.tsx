@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  themeColor: "#e5001a",
   manifest: "/site.webmanifest",
   openGraph: {
     title: "BrandThink — Your Brand Our Mind",
@@ -30,6 +29,10 @@ export const metadata: Metadata = {
     siteName: "BrandThink",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#E8312A",
 };
 
 /* ─── Helpers ──────────────────────────────────────────────────────────── */

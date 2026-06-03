@@ -1,9 +1,5 @@
+"use client";
 import Footer from "@/components/sections/Footer";
-
-export const metadata = {
-  title: "Privacy Policy — BrandThink",
-  description: "How BrandThink collects, uses, and protects your personal data.",
-};
 
 const sections = [
   {
