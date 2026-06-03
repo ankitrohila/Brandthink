@@ -10,14 +10,24 @@ interface SeoGlobal {
   defaultTitle: string;
   defaultDescription: string;
   defaultOgImage: string;
-  googleTagId: string;
+  // Tag IDs — saved as globalTagId / facebookPixelId in data/seo.json
+  globalTagId: string;          // GA4 Measurement ID (G-XXXXXXXX)
+  gtmContainerId: string;       // GTM Container ID (GTM-XXXXX)
   googleSearchConsoleVerification: string;
   facebookPixelId: string;
   microsoftClarityId: string;
   robotsTxt: string;
-  schemaOrg: string;
   canonicalUrl: string;
-  // Tag injection
+  schemaOrg: string;
+  // Organization schema structured fields
+  orgName: string;
+  orgUrl: string;
+  orgLogo: string;
+  orgDescription: string;
+  orgPhone: string;
+  orgEmail: string;
+  orgAddress: string;
+  // Tag injection code blocks
   gtmHeadCode: string;
   gtmBodyCode: string;
   customHeadCode: string;
@@ -27,6 +37,8 @@ interface SeoGlobal {
 interface SeoData {
   global: SeoGlobal;
   pages: Record<string, { title: string; description: string; ogImage: string; noindex?: boolean }>;
+  sitemapGeneratedAt?: string;
+  sitemapStatus?: "ok" | "error" | "never";
 }
 
 interface Redirect {
@@ -115,12 +127,22 @@ const DEFAULT_SEO: SeoData = {
     siteName: "BrandThink", siteUrl: "https://thebrandthink.com",
     defaultTitle: "BrandThink — MarTech & Creative Agency",
     defaultDescription: "BrandThink crafts standout campaigns that drive real growth.",
-    defaultOgImage: "", googleTagId: "", googleSearchConsoleVerification: "",
-    facebookPixelId: "", microsoftClarityId: "", robotsTxt: "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: https://thebrandthink.com/sitemap.xml",
-    schemaOrg: "", canonicalUrl: "",
+    defaultOgImage: "",
+    globalTagId: "",
+    gtmContainerId: "",
+    googleSearchConsoleVerification: "",
+    facebookPixelId: "",
+    microsoftClarityId: "",
+    robotsTxt: "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: https://thebrandthink.com/sitemap.xml",
+    canonicalUrl: "",
+    schemaOrg: "",
+    orgName: "BrandThink", orgUrl: "https://thebrandthink.com",
+    orgLogo: "", orgDescription: "", orgPhone: "", orgEmail: "", orgAddress: "",
     gtmHeadCode: "", gtmBodyCode: "", customHeadCode: "", customBodyCode: "",
   },
   pages: {},
+  sitemapGeneratedAt: "",
+  sitemapStatus: "never",
 };
 
 export default function AdminSeoPage() {
@@ -132,6 +154,7 @@ export default function AdminSeoPage() {
   const [saving,      setSaving]    = useState(false);
   const [saved,       setSaved]     = useState(false);
   const [newRed,      setNewRed]    = useState({ from: "", to: "", type: "301" });
+  const [sitemapRegen, setSitemapRegen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("bt_admin_user");
@@ -140,7 +163,12 @@ export default function AdminSeoPage() {
     fetch("/api/admin/seo", { headers: { "x-admin-token": tok } })
       .then(r => r.json())
       .then(d => {
-        if (d && d.global) setSeo({ global: { ...DEFAULT_SEO.global, ...d.global }, pages: d.pages || {} });
+        if (d && d.global) setSeo({
+          global: { ...DEFAULT_SEO.global, ...d.global },
+          pages: d.pages || {},
+          sitemapGeneratedAt: d.sitemapGeneratedAt || "",
+          sitemapStatus: d.sitemapStatus || "never",
+        });
       }).catch(() => {});
     fetch("/api/admin/redirects", { headers: { "x-admin-token": tok } })
       .then(r => r.json()).then(d => setRedirects(d.redirects || [])).catch(() => {});
@@ -152,6 +180,23 @@ export default function AdminSeoPage() {
     await fetch("/api/admin/seo", { method: "PUT", headers: { "Content-Type": "application/json", "x-admin-token": tok }, body: JSON.stringify(payload) });
     setSaved(true); setTimeout(() => setSaved(false), 2200);
     setSaving(false);
+  }
+
+  async function regenerateSitemap() {
+    setSitemapRegen(true);
+    const tok = localStorage.getItem("bt_admin_token") || "";
+    try {
+      const r = await fetch("/api/admin/sitemap/regenerate", { method: "POST", headers: { "x-admin-token": tok } });
+      if (r.ok) {
+        const d = await r.json();
+        setSeo(prev => ({ ...prev, sitemapGeneratedAt: d.generatedAt || new Date().toISOString(), sitemapStatus: "ok" }));
+      } else {
+        setSeo(prev => ({ ...prev, sitemapStatus: "error" }));
+      }
+    } catch {
+      setSeo(prev => ({ ...prev, sitemapStatus: "error" }));
+    }
+    setSitemapRegen(false);
   }
 
   async function addRedirect() {
@@ -211,16 +256,12 @@ export default function AdminSeoPage() {
           {tab === 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <p style={{ fontSize: "0.8125rem", color: "var(--adm-muted)", marginBottom: 4 }}>
-                Default SEO values used when a page doesn't have specific overrides.
+                Default SEO values used when a page doesn&apos;t have specific overrides.
               </p>
               {([ ["Site Name",                "siteName"],
                   ["Site URL",                 "siteUrl"],
                   ["Default Meta Title",        "defaultTitle"],
                   ["Default OG Image URL",      "defaultOgImage"],
-                  ["Google Tag ID (G-… or GTM-…)", "googleTagId"],
-                  ["Search Console Verification", "googleSearchConsoleVerification"],
-                  ["Facebook Pixel ID",         "facebookPixelId"],
-                  ["Microsoft Clarity ID",      "microsoftClarityId"],
               ] as [string, keyof SeoGlobal][]).map(([label, key]) => (
                 <div key={key}>
                   <label style={lbl}>{label}</label>
@@ -329,21 +370,23 @@ export default function AdminSeoPage() {
                 Paste analytics tags, tracking pixels, and custom scripts. These are injected into every page of the site.
               </p>
 
-              {/* Quick IDs */}
+              {/* GA4 */}
               <div style={card}>
-                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 14 }}>Quick Setup — Tag IDs</h4>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                  {([
-                    ["Google Tag (GA4 / GTM)",  "googleTagId",               "G-XXXXXXXX or GTM-XXXXX"],
-                    ["Facebook Pixel ID",        "facebookPixelId",           "123456789012345"],
-                    ["Microsoft Clarity ID",     "microsoftClarityId",        "xxxxxxxxxx"],
-                    ["Search Console Verify",    "googleSearchConsoleVerification", "verification-code"],
-                  ] as [string, keyof SeoGlobal, string][]).map(([label, key, ph]) => (
-                    <div key={key}>
-                      <label style={lbl}>{label}</label>
-                      <input value={seo.global[key] || ""} onChange={e => updateGlobal(key, e.target.value)} placeholder={ph} style={inp()} />
-                    </div>
-                  ))}
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 4 }}>Google Analytics 4</h4>
+                <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
+                  Enter your GA4 Measurement ID. Saved as <code style={{ fontSize: "0.6875rem", background: "var(--adm-card2)", padding: "1px 5px", borderRadius: 3 }}>globalTagId</code> in data/seo.json.
+                </p>
+                <div>
+                  <label style={lbl}>GA4 Measurement ID</label>
+                  <input
+                    value={seo.global.globalTagId || ""}
+                    onChange={e => updateGlobal("globalTagId", e.target.value)}
+                    placeholder="G-XXXXXXXXXX"
+                    style={inp()}
+                  />
+                  <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                    Found in Google Analytics → Admin → Data Streams → your stream → Measurement ID.
+                  </p>
                 </div>
               </div>
 
@@ -351,9 +394,21 @@ export default function AdminSeoPage() {
               <div style={card}>
                 <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 4 }}>Google Tag Manager</h4>
                 <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
-                  Paste the full GTM snippet from your GTM workspace → Install → Standard.
+                  Enter your GTM Container ID, or paste the full snippet from GTM workspace → Install → Standard.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div>
+                    <label style={lbl}>GTM Container ID</label>
+                    <input
+                      value={seo.global.gtmContainerId || ""}
+                      onChange={e => updateGlobal("gtmContainerId", e.target.value)}
+                      placeholder="GTM-XXXXXXX"
+                      style={inp()}
+                    />
+                    <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                      Found in Google Tag Manager → Admin → Container Settings → Container ID.
+                    </p>
+                  </div>
                   <CodeBlock label="GTM — &lt;head&gt; snippet" hint="Paste inside <head>" rows={5}
                     value={seo.global.gtmHeadCode}
                     onChange={v => updateGlobal("gtmHeadCode", v)}
@@ -362,6 +417,63 @@ export default function AdminSeoPage() {
                     value={seo.global.gtmBodyCode}
                     onChange={v => updateGlobal("gtmBodyCode", v)}
                   />
+                </div>
+              </div>
+
+              {/* Facebook Pixel */}
+              <div style={card}>
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 4 }}>Facebook Pixel</h4>
+                <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
+                  Enter your Pixel ID. Saved as <code style={{ fontSize: "0.6875rem", background: "var(--adm-card2)", padding: "1px 5px", borderRadius: 3 }}>facebookPixelId</code> in data/seo.json.
+                </p>
+                <div>
+                  <label style={lbl}>Facebook Pixel ID</label>
+                  <input
+                    value={seo.global.facebookPixelId || ""}
+                    onChange={e => updateGlobal("facebookPixelId", e.target.value)}
+                    placeholder="123456789012345"
+                    style={inp()}
+                  />
+                  <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                    Found in Meta Business Suite → Events Manager → your pixel → Settings.
+                  </p>
+                </div>
+              </div>
+
+              {/* Microsoft Clarity */}
+              <div style={card}>
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 4 }}>Microsoft Clarity</h4>
+                <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
+                  Heatmaps and session recordings via Microsoft Clarity.
+                </p>
+                <div>
+                  <label style={lbl}>Microsoft Clarity ID</label>
+                  <input
+                    value={seo.global.microsoftClarityId || ""}
+                    onChange={e => updateGlobal("microsoftClarityId", e.target.value)}
+                    placeholder="xxxxxxxxxx"
+                    style={inp()}
+                  />
+                  <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                    Found in clarity.microsoft.com → your project → Settings → Project ID.
+                  </p>
+                </div>
+              </div>
+
+              {/* Other IDs */}
+              <div style={card}>
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 14 }}>Other Verification</h4>
+                <div>
+                  <label style={lbl}>Google Search Console Verification</label>
+                  <input
+                    value={seo.global.googleSearchConsoleVerification || ""}
+                    onChange={e => updateGlobal("googleSearchConsoleVerification", e.target.value)}
+                    placeholder="verification-meta-content-value"
+                    style={inp()}
+                  />
+                  <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                    The content value from the HTML tag verification method in Search Console.
+                  </p>
                 </div>
               </div>
 
@@ -461,16 +573,45 @@ export default function AdminSeoPage() {
           {tab === 4 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <p style={{ fontSize: "0.8125rem", color: "var(--adm-muted)" }}>
-                JSON-LD structured data injected in &lt;head&gt; sitewide. Use Google's Rich Results Test to validate.
+                JSON-LD structured data injected in &lt;head&gt; sitewide. Use Google&apos;s Rich Results Test to validate.
               </p>
-              <CodeBlock label="Organization Schema (JSON-LD)" rows={12}
+
+              {/* Organization schema structured fields */}
+              <div style={card}>
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 14 }}>Organization Schema Fields</h4>
+                <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
+                  Fill these fields to auto-generate the Organization JSON-LD, or write raw JSON below.
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  {([
+                    ["Organization Name",  "orgName",        "BrandThink"],
+                    ["Organization URL",   "orgUrl",         "https://thebrandthink.com"],
+                    ["Logo URL",           "orgLogo",        "https://thebrandthink.com/logo.png"],
+                    ["Phone",              "orgPhone",       "+91-XXXXXXXXXX"],
+                    ["Email",              "orgEmail",       "hello@thebrandthink.com"],
+                    ["Street Address",     "orgAddress",     "123 Main Street, City, State"],
+                  ] as [string, keyof SeoGlobal, string][]).map(([label, key, ph]) => (
+                    <div key={key}>
+                      <label style={lbl}>{label}</label>
+                      <input value={seo.global[key] || ""} onChange={e => updateGlobal(key, e.target.value)} placeholder={ph} style={inp()} />
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 12 }}>
+                  <label style={lbl}>Organization Description</label>
+                  <textarea value={seo.global.orgDescription || ""} onChange={e => updateGlobal("orgDescription", e.target.value)} rows={2} style={inp({ resize: "vertical" })} />
+                </div>
+              </div>
+
+              {/* Raw JSON-LD editor */}
+              <CodeBlock label="Organization Schema (JSON-LD) — Raw Override" rows={12}
                 hint='{"@context":"https://schema.org","@type":"Organization"…}'
                 value={seo.global.schemaOrg || ""}
                 onChange={v => updateGlobal("schemaOrg", v)}
               />
-              <div style={card}>
+              <div style={{ ...card, background: "var(--adm-card2)" }}>
                 <h4 style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--adm-text)", marginBottom: 10 }}>Article Schema Template</h4>
-                <pre style={{ fontSize: "0.6875rem", color: "var(--adm-muted2)", background: "var(--adm-card2)", padding: 12, borderRadius: 7, overflow: "auto", lineHeight: 1.7 }}>{`{
+                <pre style={{ fontSize: "0.6875rem", color: "var(--adm-muted2)", background: "var(--adm-card)", padding: 12, borderRadius: 7, overflow: "auto", lineHeight: 1.7 }}>{`{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "{{title}}",
@@ -492,6 +633,29 @@ export default function AdminSeoPage() {
                   value={seo.global.robotsTxt || ""}
                   onChange={v => updateGlobal("robotsTxt", v)}
                 />
+                <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 8 }}>
+                  Served at <code style={{ background: "var(--adm-card2)", padding: "1px 5px", borderRadius: 3 }}>/robots.txt</code>. The Sitemap directive is appended automatically.
+                </p>
+              </div>
+
+              {/* Canonical URL setting */}
+              <div style={card}>
+                <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--adm-text)", marginBottom: 4 }}>Canonical URL</h4>
+                <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginBottom: 14 }}>
+                  The preferred base URL used in canonical link tags across all pages. Leave blank to use the Site URL from Global settings.
+                </p>
+                <div>
+                  <label style={lbl}>Canonical Base URL</label>
+                  <input
+                    value={seo.global.canonicalUrl || ""}
+                    onChange={e => updateGlobal("canonicalUrl", e.target.value)}
+                    placeholder="https://thebrandthink.com"
+                    style={inp()}
+                  />
+                  <p style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 6 }}>
+                    Example: if your site is accessible on both www and non-www, set the canonical base to your preferred version.
+                  </p>
+                </div>
               </div>
 
               <div style={card}>
@@ -517,11 +681,11 @@ export default function AdminSeoPage() {
                   Connect Google Search Console for live data. Showing reference targets below.
                 </p>
                 {[
-                  { label: "LCP (Largest Contentful Paint)", target: "≤ 2.5s", good: true },
-                  { label: "INP (Interaction to Next Paint)", target: "≤ 200ms", good: true },
-                  { label: "CLS (Cumulative Layout Shift)", target: "≤ 0.1", good: true },
-                  { label: "FCP (First Contentful Paint)", target: "≤ 1.8s", good: true },
-                  { label: "TTFB (Time to First Byte)", target: "≤ 800ms", good: true },
+                  { label: "LCP (Largest Contentful Paint)", target: "≤ 2.5s" },
+                  { label: "INP (Interaction to Next Paint)", target: "≤ 200ms" },
+                  { label: "CLS (Cumulative Layout Shift)", target: "≤ 0.1" },
+                  { label: "FCP (First Contentful Paint)", target: "≤ 1.8s" },
+                  { label: "TTFB (Time to First Byte)", target: "≤ 800ms" },
                 ].map(m => (
                   <div key={m.label} style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid var(--adm-border)" }}>
                     <span style={{ fontSize: "0.8125rem", color: "var(--adm-muted2)" }}>{m.label}</span>
@@ -562,9 +726,39 @@ export default function AdminSeoPage() {
                   <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--adm-text)" }}>XML Sitemap</h3>
                   <p style={{ fontSize: "0.75rem", color: "var(--adm-muted)", marginTop: 2 }}>Auto-generated from site pages</p>
                 </div>
-                <button style={{ padding: "8px 16px", borderRadius: 7, background: "var(--adm-text)", color: "var(--adm-bg)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer" }}>
-                  Regenerate
+                <button
+                  onClick={regenerateSitemap}
+                  disabled={sitemapRegen}
+                  style={{ padding: "8px 16px", borderRadius: 7, background: "var(--adm-text)", color: "var(--adm-bg)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: sitemapRegen ? "not-allowed" : "pointer", opacity: sitemapRegen ? 0.6 : 1 }}
+                >
+                  {sitemapRegen ? "Generating…" : "Regenerate"}
                 </button>
+              </div>
+
+              {/* Generation status */}
+              <div style={{ ...card, display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+                <div style={{
+                  width: 10, height: 10, borderRadius: "50%", flexShrink: 0,
+                  background: seo.sitemapStatus === "ok" ? "#34D399"
+                            : seo.sitemapStatus === "error" ? "#F87171"
+                            : "var(--adm-muted)",
+                }} />
+                <div>
+                  <div style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--adm-text)" }}>
+                    {seo.sitemapStatus === "ok"    ? "Sitemap generated successfully"
+                   : seo.sitemapStatus === "error" ? "Last generation failed"
+                   :                                 "Sitemap not yet generated"}
+                  </div>
+                  {seo.sitemapGeneratedAt ? (
+                    <div style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 3 }}>
+                      Last generated: {new Date(seo.sitemapGeneratedAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: "0.6875rem", color: "var(--adm-muted)", marginTop: 3 }}>
+                      Click Regenerate to build the sitemap.
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div style={{ ...card, display: "flex", gap: 28, flexWrap: "wrap", marginBottom: 16 }}>

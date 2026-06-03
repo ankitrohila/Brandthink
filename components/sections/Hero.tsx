@@ -188,7 +188,7 @@ export default function Hero() {
           </div>
 
           {/* Giant headline */}
-          <div style={{ lineHeight: 0.92 }}>
+          <h1 style={{ lineHeight: 0.92, margin: 0 }}>
             {[
               { word: "We Build",    accent: false },
               { word: "Systems",     accent: false },
@@ -210,7 +210,7 @@ export default function Hero() {
                 </span>
               </div>
             ))}
-          </div>
+          </h1>
 
           <p className="hero-sub"
             style={{ marginTop: 28, fontSize: "1.125rem", color: "var(--bt-muted)", lineHeight: 1.75, maxWidth: 560, margin: "28px auto 0" }}>
