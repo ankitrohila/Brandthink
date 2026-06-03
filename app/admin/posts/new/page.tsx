@@ -72,7 +72,7 @@ export default function NewPostPage() {
       ...form,
       status: status || form.status,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
-      author: user ? { name: user.name, role: "Author", avatar: user.avatar } : { name: "Ankit Rohilla", role: "Founder & CEO", avatar: "https://i.pravatar.cc/64?img=68" },
+      author: user ? { name: user.name, role: "Author", avatar: user.avatar } : { name: "Aditya Raj", role: "Founder & CEO", avatar: "https://i.pravatar.cc/64?img=68" },
       publishedAt: new Date().toISOString(),
     };
     const res = await fetch("/api/posts", {

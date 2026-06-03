@@ -220,7 +220,7 @@ export default function LeadCaptureModal({ isOpen, onClose, title, subtitle, sou
                       value={form.name}
                       onChange={(e) => update("name", e.target.value)}
                       onBlur={() => handleBlur("name")}
-                      placeholder="Ankit Rohilla"
+                      placeholder="Aditya Raj"
                       style={getInputStyle(touched.name && !!errors.name)}
                       onFocus={(e) => { e.currentTarget.style.borderColor = touched.name && errors.name ? "rgba(232,49,42,0.7)" : "rgba(232,49,42,0.45)"; }}
                     />

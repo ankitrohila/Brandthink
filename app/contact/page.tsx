@@ -87,9 +87,11 @@ export default function ContactPage() {
               </h2>
 
               {[
-                { icon: "✉",  label: "Email",  value: "rohilla77@gmail.com",   href: "mailto:rohilla77@gmail.com" },
-                { icon: "📞", label: "Phone",  value: "+91-8950205038",       href: "tel:+918950205038" },
-                { icon: "📍", label: "Office", value: "Sonipat, Haryana",     href: "#" },
+                { icon: "✉",  label: "Email",           value: "adityaraj@thebrandthink.com",                                    href: "mailto:adityaraj@thebrandthink.com" },
+                { icon: "📞", label: "Phone",           value: "+91-9571361543",                                                  href: "tel:+919571361543" },
+                { icon: "📍", label: "Bangalore Office", value: "2nd Main, 3rd Cross, Murugeshpalya, Bangalore 560017",           href: "https://maps.google.com/?q=Murugeshpalya+Bangalore+560017" },
+                { icon: "🏢", label: "Gurugram Office",  value: "DLF, Cyber City, Gurugram - 122002",                            href: "https://maps.google.com/?q=DLF+Cyber+City+Gurugram+122002" },
+                { icon: "🕐", label: "Working Hours",    value: "Mon – Fri: 10:00 am – 7:00 pm",                                 href: "#" },
               ].map((item) => (
                 <a key={item.label} href={item.href} style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 28, textDecoration: "none" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 10, background: "var(--bt-card)", border: "1px solid var(--bt-border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.25rem", flexShrink: 0 }}>
@@ -131,7 +133,7 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                   {[
-                    { name: "name",    label: "Your Name",      type: "text",  placeholder: "Ankit Rohilla"      },
+                    { name: "name",    label: "Your Name",      type: "text",  placeholder: "Aditya Raj"         },
                     { name: "email",   label: "Email Address",  type: "email", placeholder: "you@company.com"    },
                     { name: "company", label: "Company",        type: "text",  placeholder: "Your Company"       },
                     { name: "budget",  label: "Monthly Budget", type: "text",  placeholder: "e.g. ₹5L–10L/month" },

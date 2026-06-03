@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -132,12 +133,12 @@ export default function ServicesPage() {
                   ))}
                 </ul>
                 <div style={{ marginTop: 40 }}>
-                  <a href="/contact" className="btn btn-primary" style={{ fontSize: "0.9375rem" }}>
+                  <Link href="/contact" className="btn btn-primary" style={{ fontSize: "0.9375rem" }}>
                     Discuss This Service
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
 

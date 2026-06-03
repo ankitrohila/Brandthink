@@ -223,9 +223,9 @@ function BrandMark({ size = 44 }: { size?: number }) {
     <Image
       src="/logo.png"
       alt="BrandThink"
-      width={size}
+      width={size * 2.5}
       height={size}
-      style={{ objectFit: "contain", flexShrink: 0, borderRadius: 8 }}
+      style={{ objectFit: "contain", flexShrink: 0 }}
       priority
     />
   );
@@ -440,8 +440,8 @@ export default function Navbar() {
           </Link>
           <div style={{ marginTop: 24, display: "flex", gap: 16, justifyContent: "center" }}>
             {[
-              { label: "Email", href: "mailto:rohilla77@gmail.com", icon: "✉" },
-              { label: "Phone", href: "tel:+918950205038", icon: "📞" },
+              { label: "Email", href: "mailto:adityaraj@thebrandthink.com", icon: "✉" },
+              { label: "Phone", href: "tel:+919571361543", icon: "📞" },
             ].map((item) => (
               <a
                 key={item.label}

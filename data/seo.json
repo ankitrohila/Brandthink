@@ -2,24 +2,25 @@
   "global": {
     "siteName": "BrandThink",
     "siteUrl": "https://thebrandthink.com",
-    "defaultTitle": "BrandThink — MarTech & Creative Agency",
-    "defaultDescription": "We build growth infrastructure — demand generation, distribution systems, and conversion engines.",
+    "defaultTitle": "BrandThink — 360° Marketing & Advertising Agency | Your Brand Our Mind",
+    "defaultDescription": "BrandThink is a 360° marketing and advertising agency. We craft standout campaigns through creativity, data, and cutting-edge tech. 350+ projects, 300+ happy clients.",
     "defaultOgImage": "/logo.png",
     "googleTagId": "",
     "googleSearchConsoleVerification": "",
     "facebookPixelId": "",
     "robotsTxt": "User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: https://thebrandthink.com/sitemap.xml",
-    "schemaOrg": "{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"BrandThink\",\"url\":\"https://thebrandthink.com\",\"logo\":\"https://thebrandthink.com/logo.png\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"telephone\":\"+91-8950205038\",\"contactType\":\"customer service\"}}",
+    "schemaOrg": "{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"BrandThink\",\"url\":\"https://thebrandthink.com\",\"logo\":\"https://thebrandthink.com/logo.png\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"telephone\":\"+91-9571361543\",\"contactType\":\"customer service\"},\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"2nd Main 3rd Cross Murugeshpalya\",\"addressLocality\":\"Bangalore\",\"postalCode\":\"560017\",\"addressCountry\":\"IN\"}}",
     "canonicalUrl": ""
   },
   "pages": {
-    "/": {"title":"BrandThink — Growth Infrastructure Agency","description":"We build demand generation, distribution systems, and conversion engines for ambitious brands.","ogImage":""},
-    "/about": {"title":"About BrandThink — Our Team & Story","description":"Meet the BrandThink team — a group of performance marketers, brand strategists, and creative technologists building growth infrastructure.","ogImage":""},
-    "/services": {"title":"Services — BrandThink","description":"Brand strategy, performance marketing, creative production, media distribution, and AI-powered MarTech — all under one roof.","ogImage":""},
-    "/work": {"title":"Our Work — BrandThink","description":"Case studies and results from the brands we've helped grow. Real numbers, real stories.","ogImage":""},
-    "/insights": {"title":"Insights — BrandThink","description":"Strategy frameworks, case studies, and market intelligence from the BrandThink team.","ogImage":""},
-    "/blog": {"title":"Blog — BrandThink","description":"Fresh thinking on performance marketing, brand strategy, AI, and growth from the BrandThink team.","ogImage":""},
-    "/contact": {"title":"Contact BrandThink — Start a Project","description":"Ready to build something that grows? Let's talk about your brand, your goals, and how we can help.","ogImage":""}
+    "/": {"title":"BrandThink — Your Brand Our Mind | 360° Marketing Agency","description":"We build brands through performance marketing, creative solutions, and cutting-edge tech. 350+ projects | 300+ clients | 4x avg ROAS.","ogImage":""},
+    "/about": {"title":"About BrandThink — Our Story, Team & Mission","description":"Meet the BrandThink team — India's premier 360° marketing agency combining creativity, data, and tech to build unforgettable brands.","ogImage":""},
+    "/services": {"title":"Services — BrandThink | Brand PR, Tech, Media & Research Solutions","description":"Brand PR, Films & Photography, Brand Solutions, Tech Solutions, Media Solutions, Research Solutions — all under one roof.","ogImage":""},
+    "/work": {"title":"Our Work — BrandThink | 350+ Projects Delivered","description":"Case studies and results from brands we've helped grow. Performance marketing, brand building, and creative campaigns.","ogImage":""},
+    "/blog": {"title":"Blog — BrandThink | Marketing Insights & Growth Strategies","description":"Fresh thinking on performance marketing, brand strategy, AI, and growth from the BrandThink team.","ogImage":""},
+    "/contact": {"title":"Contact BrandThink — Let's Make Something Great Together","description":"Ready to build your brand? Contact BrandThink at adityaraj@thebrandthink.com or +91-9571361543. Offices in Bangalore & Gurugram.","ogImage":""},
+    "/privacy": {"title":"Privacy Policy — BrandThink","description":"BrandThink privacy policy — how we collect, use, and protect your data.","ogImage":""},
+    "/terms": {"title":"Terms of Service — BrandThink","description":"Terms of service for BrandThink marketing and advertising agency services.","ogImage":""}
   },
   "redirects": []
 }

@@ -12,13 +12,22 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BrandThink — MarTech & Creative Agency",
+  title: {
+    default: "BrandThink — Your Brand Our Mind",
+    template: "%s | BrandThink",
+  },
   description:
-    "BrandThink crafts standout campaigns that drive real growth through creativity, data, and cutting-edge technology.",
-  keywords: "marketing agency, brand strategy, creative technology, MarTech, digital campaigns",
+    "BrandThink is a 360° marketing and advertising agency. 350+ projects, 300+ clients.",
+  keywords: "marketing agency, brand strategy, creative technology, MarTech, digital campaigns, advertising agency",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  themeColor: "#e5001a",
+  manifest: "/site.webmanifest",
   openGraph: {
-    title: "BrandThink — MarTech & Creative Agency",
-    description: "360° Marketing and Advertising Agency",
+    title: "BrandThink — Your Brand Our Mind",
+    description: "BrandThink is a 360° marketing and advertising agency. 350+ projects, 300+ clients.",
+    siteName: "BrandThink",
     type: "website",
   },
 };

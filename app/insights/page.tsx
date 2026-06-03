@@ -15,7 +15,7 @@ const POSTS = [
     date: "May 2025",
     readTime: "8 min",
     img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "why-d2c-brands-fail-at-performance-marketing",
     excerpt: "Most D2C brands chase ROAS but miss the three structural things that actually make paid acquisition profitable at scale.",
     accent: "#E8312A",
     featured: true,
@@ -26,7 +26,7 @@ const POSTS = [
     date: "Apr 2025",
     readTime: "6 min",
     img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "martech-stack-40-percent-cac-reduction-medaxis",
     excerpt: "A breakdown of the CDP, CRM, and attribution architecture we built — and the exact decisions that moved the needle.",
     accent: "#38BDF8",
     featured: false,
@@ -37,7 +37,7 @@ const POSTS = [
     date: "Apr 2025",
     readTime: "5 min",
     img: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "brand-vs-performance-false-dichotomy",
     excerpt: "The brands that grow fastest don't choose between brand-building and performance — they treat them as a unified system.",
     accent: "#8B5CF6",
     featured: false,
@@ -48,7 +48,7 @@ const POSTS = [
     date: "Mar 2025",
     readTime: "10 min",
     img: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "novabev-zero-to-12cr-arr-year-1",
     excerpt: "The full story of building NovaBev — from naming, identity, and positioning to the go-to-market engine that hit ₹1Cr/month.",
     accent: "#A78BFA",
     featured: false,
@@ -59,7 +59,7 @@ const POSTS = [
     date: "Mar 2025",
     readTime: "7 min",
     img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "ai-creative-production-3x-output-without-hiring",
     excerpt: "Our internal AI-assisted creative pipeline — built on top of standard production workflows — and what it actually saves us.",
     accent: "#FB923C",
     featured: false,
@@ -70,7 +70,7 @@ const POSTS = [
     date: "Feb 2025",
     readTime: "6 min",
     img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&h=480&q=80",
-    slug: "/blog",
+    slug: "influencer-playbook-beyond-vanity-metrics",
     excerpt: "Why CPM and impressions are the wrong metrics for influencer marketing — and what to measure instead if you want revenue.",
     accent: "#F472B6",
     featured: false,
@@ -190,7 +190,7 @@ export default function InsightsPage() {
       {activeCategory === "All" && (
         <section className="section-sm" style={{ background: "var(--bt-black)", paddingTop: 0 }}>
           <div className="container">
-            <Link href={featured.slug} className="post-card featured-post-grid" style={{
+            <Link href={"/blog/" + featured.slug} className="post-card featured-post-grid" style={{
               display: "grid", gridTemplateColumns: "1fr 1fr",
               gap: 0, borderRadius: 20, overflow: "hidden",
               border: "1px solid var(--bt-border)", textDecoration: "none",
@@ -239,7 +239,7 @@ export default function InsightsPage() {
               {rest.map((post) => (
                 <Link
                   key={post.title}
-                  href={post.slug}
+                  href={"/blog/" + post.slug}
                   className="post-card card"
                   style={{ textDecoration: "none", display: "block", background: "var(--bt-card)", overflow: "hidden", borderRadius: 16, transition: "transform 0.3s" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; }}

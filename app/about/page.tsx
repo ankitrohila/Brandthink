@@ -27,12 +27,11 @@ const TIMELINE = [
 ];
 
 const TEAM = [
-  { name: "Ankit Rohilla", role: "Founder & CEO",          img: "https://i.pravatar.cc/300?img=68", bg: "#1a0808" },
-  { name: "Priya Sharma",  role: "Chief Creative Officer",  img: "https://i.pravatar.cc/300?img=47", bg: "#1a0f2f" },
-  { name: "Rohit Nair",    role: "Head of Performance",     img: "https://i.pravatar.cc/300?img=33", bg: "#0f1f2f" },
-  { name: "Anjali Menon",  role: "Head of Strategy",        img: "https://i.pravatar.cc/300?img=44", bg: "#2f1a0f" },
-  { name: "Karan Mehta",   role: "Head of Technology",      img: "https://i.pravatar.cc/300?img=15", bg: "#1f0f1a" },
-  { name: "Deepa Pillai",  role: "Head of Client Success",  img: "https://i.pravatar.cc/300?img=57", bg: "#0f1a0f" },
+  { name: "Aditya Raj",          role: "Founder & CEO",              img: "https://i.pravatar.cc/300?img=11", bg: "#1a0808" },
+  { name: "Swastika Chandele",   role: "Vice President",             img: "https://i.pravatar.cc/300?img=47", bg: "#1a0f2f" },
+  { name: "Ayush Singh",         role: "Operations Lead",            img: "https://i.pravatar.cc/300?img=33", bg: "#0f1f2f" },
+  { name: "Sanyukta Singh",      role: "Social Media Strategist",    img: "https://i.pravatar.cc/300?img=44", bg: "#2f1a0f" },
+  { name: "G. Bhargavi",         role: "Social Media Manager",       img: "https://i.pravatar.cc/300?img=15", bg: "#1f0f1a" },
 ];
 
 export default function AboutPage() {
@@ -72,7 +71,7 @@ export default function AboutPage() {
             ))}
           </h1>
           <p className="about-sub" style={{ marginTop: 28, fontSize: "1.125rem", color: "var(--bt-muted)", maxWidth: 560, lineHeight: 1.75 }}>
-            BrandThink is a 360° MarTech and creative agency founded in Bangalore. We believe marketing should be honest, data-driven, and beautiful — in that order.
+            BrandThink is a 360° Marketing and Advertising Agency. We believe marketing should be honest, data-driven, and beautiful — in that order.
           </p>
         </div>
       </section>
@@ -98,10 +97,10 @@ export default function AboutPage() {
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
               {[
-                { num: "150+",    label: "Brands Grown"   },
-                { num: "50+",     label: "Team Members"   },
-                { num: "₹120Cr+", label: "Client Revenue" },
-                { num: "6+",      label: "Years"          },
+                { num: "350+", label: "Projects Completed" },
+                { num: "300+", label: "Happy Clients"      },
+                { num: "12+",  label: "Awards Won"         },
+                { num: "4x",   label: "Avg. ROAS"          },
               ].map((stat) => (
                 <div key={stat.label} style={{ padding: 28, borderRadius: 16, background: "var(--bt-card)", border: "1px solid var(--bt-border)", textAlign: "center" }}>
                   <div style={{

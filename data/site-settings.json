@@ -1,13 +1,16 @@
 {
   "siteName": "BrandThink",
   "tagline": "Your Brand Our Mind",
-  "email": "rohilla77@gmail.com",
-  "phone": "+91-8950205038",
-  "address": "Sonipat, Haryana",
+  "siteUrl": "https://thebrandthink.com",
+  "email": "adityaraj@thebrandthink.com",
+  "phone": "+91-9571361543",
+  "address": "2nd Main, 3rd Cross, Murugeshpalya, Bangalore 560017",
   "socialLinks": {
-    "linkedin": "https://linkedin.com/company/thebrandthink",
-    "instagram": "https://instagram.com/thebrandthink",
-    "twitter": "https://twitter.com/thebrandthink"
+    "linkedin": "https://www.linkedin.com/company/brand-think90/",
+    "instagram": "https://www.instagram.com/brandthink__/",
+    "twitter": "https://twitter.com/brandthink__",
+    "facebook": "https://www.facebook.com/brandthink90/",
+    "youtube": "https://www.youtube.com/@BrandThink-go9tu"
   },
   "maintenanceMode": false,
   "allowComments": true,

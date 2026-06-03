@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -124,47 +125,49 @@ export default function WorkPage() {
                 className="project-card card"
                 style={{ background: project.color, cursor: "pointer", minHeight: 440, position: "relative", overflow: "hidden" }}
               >
-                {/* Image */}
-                <div style={{ height: 220, overflow: "hidden", position: "relative" }}>
-                  <img
-                    src={project.img}
-                    alt={project.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s var(--ease-out)" }}
-                    loading="lazy"
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, transparent 40%, ${project.color} 100%)` }} />
-                </div>
-
-                {/* Body */}
-                <div style={{ padding: "24px 32px 32px", position: "relative" }}>
-                  <div aria-hidden="true" style={{ position: "absolute", top: -80, right: 0, width: 260, height: 260, borderRadius: "50%", background: `radial-gradient(circle, ${project.accent}14, transparent 70%)`, pointerEvents: "none" }} />
-
-                  <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-                    {project.tags.map((tag) => (
-                      <span key={tag} style={{ fontSize: "0.6875rem", fontWeight: 600, padding: "4px 12px", borderRadius: 99, border: `1px solid ${project.accent}40`, color: project.accent, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                        {tag}
-                      </span>
-                    ))}
+                <Link href="/contact" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
+                  {/* Image */}
+                  <div style={{ height: 220, overflow: "hidden", position: "relative" }}>
+                    <img
+                      src={project.img}
+                      alt={project.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s var(--ease-out)" }}
+                      loading="lazy"
+                      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                    />
+                    <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, transparent 40%, ${project.color} 100%)` }} />
                   </div>
 
-                  <div style={{ fontSize: "0.75rem", color: "var(--bt-muted)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
-                    {project.cat} · {project.year}
+                  {/* Body */}
+                  <div style={{ padding: "24px 32px 32px", position: "relative" }}>
+                    <div aria-hidden="true" style={{ position: "absolute", top: -80, right: 0, width: 260, height: 260, borderRadius: "50%", background: `radial-gradient(circle, ${project.accent}14, transparent 70%)`, pointerEvents: "none" }} />
+
+                    <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
+                      {project.tags.map((tag) => (
+                        <span key={tag} style={{ fontSize: "0.6875rem", fontWeight: 600, padding: "4px 12px", borderRadius: 99, border: `1px solid ${project.accent}40`, color: project.accent, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div style={{ fontSize: "0.75rem", color: "var(--bt-muted)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>
+                      {project.cat} · {project.year}
+                    </div>
+                    <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-0.03em", color: "#F5F5F5", marginBottom: 12 }}>
+                      {project.title}
+                    </h3>
+                    <p style={{ fontSize: "0.9375rem", color: "var(--bt-muted)", lineHeight: 1.7, marginBottom: 24 }}>
+                      {project.desc}
+                    </p>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 99, background: `${project.accent}15`, border: `1px solid ${project.accent}30`, color: project.accent, fontSize: "0.875rem", fontWeight: 700 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                      </svg>
+                      {project.result}
+                    </div>
                   </div>
-                  <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-0.03em", color: "#F5F5F5", marginBottom: 12 }}>
-                    {project.title}
-                  </h3>
-                  <p style={{ fontSize: "0.9375rem", color: "var(--bt-muted)", lineHeight: 1.7, marginBottom: 24 }}>
-                    {project.desc}
-                  </p>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 99, background: `${project.accent}15`, border: `1px solid ${project.accent}30`, color: project.accent, fontSize: "0.875rem", fontWeight: 700 }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
-                    </svg>
-                    {project.result}
-                  </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

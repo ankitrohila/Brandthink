@@ -200,7 +200,7 @@ export function subscribeConfirmHtml(email: string) {
       </p>
     </div>
     <div style="padding: 16px 32px; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.75rem; color: rgba(255,255,255,0.3);">
-      BrandThink — MarTech &amp; Creative Agency · Sonipat, Haryana
+      BrandThink — MarTech &amp; Creative Agency · Bangalore, India
     </div>
   </div>
 </body>
@@ -249,7 +249,7 @@ export function bookingConfirmHtml(data: {
       </div>
     </div>
     <div style="padding: 16px 32px; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.75rem; color: rgba(255,255,255,0.3);">
-      BrandThink — MarTech &amp; Creative Agency · rohilla77@gmail.com
+      BrandThink — MarTech &amp; Creative Agency · adityaraj@thebrandthink.com
     </div>
   </div>
 </body>
@@ -326,7 +326,7 @@ export function bookingStatusUpdateHtml(data: {
       </div>` : ""}
     </div>
     <div style="padding: 16px 32px; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.75rem; color: rgba(255,255,255,0.3);">
-      BrandThink — MarTech &amp; Creative Agency · rohilla77@gmail.com
+      BrandThink — MarTech &amp; Creative Agency · adityaraj@thebrandthink.com
     </div>
   </div>
 </body>
